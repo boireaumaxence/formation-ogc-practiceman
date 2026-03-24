@@ -1,498 +1,153 @@
-<!doctype html>
-<html lang="fr" class="h-full">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Module Practiceman - Chapitre 1</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            heading: ['Playfair Display', 'Georgia', 'serif'],
-            body: ['DM Sans', 'system-ui', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    html, body { height: 100%; width: 100%; margin: 0; padding: 0; box-sizing: border-box; background: #fafaf9; }
-    .app-shell { width: 100%; height: 100%; max-width: 100%; overflow-y: auto; display: flex; flex-direction: column; }
-    main { flex: 1; overflow-y: auto; width: 100%; }
-    
-    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease; }
-    .accordion-content.open { max-height: 500px; padding-top: 1rem; padding-bottom: 1rem; }
-    .accordion-chevron { transition: transform 0.3s ease; }
-    .accordion-chevron.rotated { transform: rotate(180deg); }
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montage Rise 360 - Chapitre 1 : Introduction au métier de Practiceman</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f5; color: #1f2937; line-height: 1.6; padding: 20px; max-width: 900px; margin: auto; }
+        h1 { color: #111827; border-bottom: 3px solid #059669; padding-bottom: 10px; }
+        h2 { color: #059669; margin-top: 30px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .rise-block { background: #ffffff; border: 1px solid #e5e7eb; border-left: 5px solid #059669; padding: 20px; margin-bottom: 20px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .block-type { display: inline-block; background: #e5e7eb; color: #374151; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; }
+        .visual-suggestion { background: #f0fdf4; border: 1px dashed #10b981; padding: 15px; margin-top: 15px; font-size: 0.9rem; color: #065f46; }
+        .quiz-question { background: #f9fafb; padding: 15px; border-left: 3px solid #3b82f6; margin-bottom: 15px; }
+        .quiz-feedback { background: #eff6ff; padding: 10px; margin-top: 10px; font-size: 0.9rem; color: #1e3a8a; font-weight: 500; }
+        strong { color: #111827; }
+    </style>
+</head>
+<body>
 
-    .tab-btn { position: relative; transition: all 0.2s; }
-    .tab-btn::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 3px; background: transparent; transition: background 0.2s; }
-    .tab-btn.active { color: #065f46; font-weight: 600; }
-    .tab-btn.active::after { background: #065f46; }
-    .tab-panel { display: none; animation: fadeSlide 0.3s ease; }
-    .tab-panel.active { display: block; }
+    <h1>CHAPITRE 1 — INTRODUCTION AU MÉTIER DE PRACTICEMAN</h1>
 
-    @keyframes fadeSlide { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-
-    .hotspot-pulse { animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); } }
-
-    .sort-item { cursor: grab; transition: transform 0.2s, box-shadow 0.2s; user-select: none; }
-    .sort-item:active { cursor: grabbing; transform: scale(1.02); }
-    .sort-zone { min-height: 70px; transition: all 0.2s; border: 2px dashed #cbd5e1; border-radius: 8px; }
-    .sort-zone.drag-over { background: #ecfdf5; border-color: #059669; }
-
-    .quiz-option { transition: all 0.2s; cursor: pointer; border: 1px solid #e7e5e4; }
-    .quiz-option:hover { border-color: #a8a29e; background: #f5f5f4; }
-    .quiz-option.selected { border-color: #065f46; background: #ecfdf5; }
-    .quiz-option.correct-answer { border-color: #16a34a; background: #dcfce7; }
-    .quiz-option.wrong-answer { border-color: #dc2626; background: #fef2f2; }
-
-    .progress-fill { transition: width 0.4s ease-out; }
-
-    .scenario-card { transition: all 0.2s; border: 1px solid #e7e5e4; }
-    .scenario-card:hover { border-color: #059669; background: #f8fafc; }
-
-    /* Articulate Rise 360 Compatibility */
-    * { box-sizing: border-box; }
-    body, .app-shell, main, header, footer { width: 100% !important; max-width: 100% !important; }
-  </style>
- </head>
- <body class="h-full font-body text-stone-800">
-  <div class="app-shell" id="app-shell">
-   
-   <header class="bg-emerald-900 sticky top-0 z-20 shadow-md">
-    <div class="max-w-4xl mx-auto px-4 py-4 md:px-6 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-     <div>
-      <span class="inline-block bg-emerald-800 text-emerald-100 text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded mb-1">Module 1</span>
-      <h1 id="mainTitle" class="font-heading text-xl md:text-2xl text-white leading-tight">Introduction au métier de Practiceman</h1>
-     </div>
-     
-     <div class="w-full md:w-48 flex flex-col gap-1">
-      <div class="flex justify-between text-[11px] text-emerald-200 font-medium">
-       <span>Progression</span>
-       <span id="progressText">0/5</span>
-      </div>
-      <div class="bg-emerald-800/50 rounded-full h-1.5 w-full overflow-hidden">
-       <div id="progressBar" class="progress-fill bg-emerald-400 h-full w-0"></div>
-      </div>
-     </div>
+    <div class="rise-block">
+        <div class="block-type">Bloc : Texte Introductif (Text > Statement)</div>
+        <p><strong>1.1 — Définition du métier</strong></p>
+        <p>Le Practiceman est la personne responsable du bon fonctionnement du practice dans un golf[cite: 18]. Il veille à ce que l’aire d’entraînement soit propre, organisée, sécurisée et prête à accueillir les joueurs[cite: 19].</p>
+        <p>Le practice est un espace très fréquenté. Les joueurs viennent y frapper des balles pour s’échauffer avant leur départ, pour s’entraîner ou pour participer à des cours avec les enseignants[cite: 20].</p>
+        <p>Le rôle du Practiceman est donc de préparer et maintenir cet espace dans des conditions optimales tout au long de la journée[cite: 21]. Son travail consiste à préparer, organiser et sécuriser le practice afin d’offrir aux joueurs un espace d’entraînement de qualité[cite: 43].</p>
+        
+        <div class="visual-suggestion">
+            <strong>📷 Suggestion visuelle (Image pleine largeur) :</strong> Une photo professionnelle (format paysage) montrant un practice parfaitement aligné à l'aube, sans joueur, illustrant la notion de "conditions optimales" et de préparation.
+        </div>
     </div>
-   </header>
 
-   <main class="max-w-4xl mx-auto px-4 md:px-6 py-6 md:py-8 space-y-6 md:space-y-8">
-    
-    <section class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden" data-section="1">
-     <div class="flex">
-      <div class="w-1.5 bg-emerald-700 flex-shrink-0"></div>
-      <div class="p-5 md:p-6 w-full">
-       <div class="flex items-center gap-3 mb-4">
-        <span class="flex items-center justify-center w-7 h-7 rounded bg-emerald-50 text-emerald-700 font-bold text-xs">1.1</span>
-        <h2 class="font-heading text-xl text-stone-900">Définition du métier</h2>
-       </div>
-       <div class="text-stone-600 text-sm leading-relaxed space-y-3">
-        <p>Le <strong class="text-stone-900">Practiceman</strong> est la personne responsable du bon fonctionnement du practice. Il veille à ce que l'aire d'entraînement soit <strong>propre, organisée, sécurisée</strong> et prête à accueillir les joueurs.</p>
-        <p>Cet espace est hautement fréquenté (échauffement, entraînement, cours). Son maintien dans des <strong>conditions optimales</strong> est un enjeu opérationnel quotidien.</p>
-       </div>
+    <div class="rise-block">
+        <div class="block-type">Bloc : Accordéon (Interactive > Accordion)</div>
+        <p><strong>1.2 — Les missions principales</strong></p>
+        <p><em>Configuration dans Rise : Créez 4 panneaux d'accordéon avec les textes suivants.</em></p>
+        <ul>
+            <li><strong>Titre de l'accordéon 1 :</strong> Préparer l'ouverture
+                <br><em>Contenu :</em> Préparer le practice avant l’ouverture afin que les installations soient prêtes à accueillir les joueurs[cite: 23].
+            </li>
+            <br>
+            <li><strong>Titre de l'accordéon 2 :</strong> Gérer les balles
+                <br><em>Contenu :</em> Gérer les balles de practice en contrôlant leur état et en remplissant les balles box[cite: 24].
+            </li>
+            <br>
+            <li><strong>Titre de l'accordéon 3 :</strong> Maintenir l'espace
+                <br><em>Contenu :</em> Maintenir le practice propre et organisé tout au long de la journée[cite: 25].
+            </li>
+            <br>
+            <li><strong>Titre de l'accordéon 4 :</strong> Assurer la sécurité
+                <br><em>Contenu :</em> Assurer la sécurité sur le practice en surveillant l’aire d’entraînement[cite: 26].
+            </li>
+        </ul>
+    </div>
 
-       <div class="mt-6 border-t border-stone-100 pt-5">
-        <h3 class="text-xs font-bold text-stone-500 uppercase tracking-wider mb-3">📍 Cartographie de l'espace</h3>
-        <div class="relative bg-stone-50 rounded-lg p-4 border border-stone-200">
-         <svg viewbox="0 0 700 240" class="w-full h-auto max-h-[200px]">
-          <rect x="0" y="180" width="700" height="60" rx="4" fill="#d1fae5" opacity="0.5" /> 
-          <rect x="40" y="40" width="200" height="120" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="1.5" /> 
-          <text x="140" y="100" text-anchor="middle" font-size="14" fill="#064e3b" font-weight="600">Aire de frappe</text> 
-          
-          <rect x="280" y="60" width="140" height="80" rx="6" fill="#fffbeb" stroke="#d97706" stroke-width="1.5" /> 
-          <text x="350" y="105" text-anchor="middle" font-size="14" fill="#92400e" font-weight="600">Balles Box</text> 
-          
-          <rect x="470" y="20" width="200" height="150" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" /> 
-          <text x="570" y="100" text-anchor="middle" font-size="14" fill="#1e3a8a" font-weight="600">Zone de retombée</text> 
-         </svg>
+    <div class="rise-block">
+        <div class="block-type">Bloc : Onglets (Interactive > Tabs)</div>
+        <p><strong>1.3 — Le rôle dans l’expérience client</strong></p>
+        <p>Le practice est souvent le premier endroit utilisé par les joueurs lorsqu’ils arrivent au golf[cite: 28]. La qualité de son organisation influence directement l’image du club[cite: 29]. Le Practiceman participe donc directement à la qualité de service du golf[cite: 34].</p>
+        <p><em>Configuration dans Rise : Créez 3 onglets.</em></p>
+        <ul>
+            <li><strong>Onglet 1 : Joueurs</strong>
+                <br><em>Contenu :</em> Un practice bien préparé permet aux joueurs de s’échauffer dans de bonnes conditions[cite: 30, 31].
+            </li>
+            <br>
+            <li><strong>Onglet 2 : Enseignants</strong>
+                <br><em>Contenu :</em> Un practice bien préparé permet aux enseignants de travailler efficacement avec leurs élèves[cite: 30, 32].
+            </li>
+            <br>
+            <li><strong>Onglet 3 : Image du Club</strong>
+                <br><em>Contenu :</em> Un practice bien préparé permet au club d’offrir une image professionnelle[cite: 30, 33].
+            </li>
+        </ul>
+    </div>
 
-         <div class="flex flex-wrap gap-2 mt-3">
-          <button onclick="showTooltip('tip1')" class="hotspot-pulse bg-white border border-emerald-200 text-emerald-800 text-[11px] font-semibold px-2.5 py-1 rounded shadow-sm hover:bg-emerald-50">Aire de frappe</button> 
-          <button onclick="showTooltip('tip2')" class="hotspot-pulse bg-white border border-amber-200 text-amber-800 text-[11px] font-semibold px-2.5 py-1 rounded shadow-sm hover:bg-amber-50" style="animation-delay:0.3s">Balles Box</button> 
-          <button onclick="showTooltip('tip3')" class="hotspot-pulse bg-white border border-blue-200 text-blue-800 text-[11px] font-semibold px-2.5 py-1 rounded shadow-sm hover:bg-blue-50" style="animation-delay:0.6s">Zone de retombée</button>
-         </div>
-
-         <div id="tip1" class="hidden mt-3 bg-white border border-emerald-100 rounded p-3 text-xs text-stone-600 shadow-sm"><strong class="text-emerald-800">Aire de frappe :</strong> Espace joueur. Contrôle des tapis, propreté des postes et signalétique.</div>
-         <div id="tip2" class="hidden mt-3 bg-white border border-amber-100 rounded p-3 text-xs text-stone-600 shadow-sm"><strong class="text-amber-800">Balles Box :</strong> Distribution. Contrôle du remplissage, état des balles et mécanique.</div>
-         <div id="tip3" class="hidden mt-3 bg-white border border-blue-100 rounded p-3 text-xs text-stone-600 shadow-sm"><strong class="text-blue-800">Zone de retombée :</strong> Terrain ouvert. Collecte régulière sécurisée.</div>
+    <div class="rise-block">
+        <div class="block-type">Bloc : Grille d'images (Gallery > Grid) ou Liste avec icônes</div>
+        <p><strong>1.4 — Les qualités d’un bon Practiceman</strong></p>
+        <p><em>Configuration dans Rise : Utilisez une grille avec de petites icônes pour chaque point, ou un bloc "Flashcard grid" pour dynamiser la lecture.</em></p>
+        <ul>
+            <li><strong>Organisation :</strong> Pour préparer et gérer le practice[cite: 36].</li>
+            <li><strong>Rigueur :</strong> Pour maintenir un espace propre et fonctionnel[cite: 37].</li>
+            <li><strong>Vigilance :</strong> Pour assurer la sécurité des joueurs[cite: 38].</li>
+            <li><strong>Sens du service :</strong> Pour accueillir et orienter les clients[cite: 39].</li>
+            <li><strong>Esprit d’équipe :</strong> Pour travailler avec les jardiniers, les enseignants et l’accueil[cite: 40].</li>
+        </ul>
+        <div class="visual-suggestion">
+            <strong>📷 Suggestion visuelle :</strong> Associer une icône claire à chaque qualité (ex: un œil pour la vigilance, une poignée de main pour le sens du service, des rouages pour l'organisation).
         </div>
-       </div>
-      </div>
-     </div>
-    </section>
+    </div>
 
-    <section class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden" data-section="2">
-     <div class="flex">
-      <div class="w-1.5 bg-emerald-700 flex-shrink-0"></div>
-      <div class="p-5 md:p-6 w-full">
-       <div class="flex items-center gap-3 mb-4">
-        <span class="flex items-center justify-center w-7 h-7 rounded bg-emerald-50 text-emerald-700 font-bold text-xs">1.2</span>
-        <h2 class="font-heading text-xl text-stone-900">Missions opérationnelles</h2>
-       </div>
-       
-       <div class="space-y-2" id="accordionMissions">
-        <div class="border border-stone-200 rounded-lg overflow-hidden">
-         <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-4 py-3 bg-stone-50 hover:bg-stone-100 transition text-left"> 
-          <span class="flex items-center gap-3">
-           <i data-lucide="settings" class="w-4 h-4 text-stone-500"></i>
-           <span class="font-semibold text-sm text-stone-800">Préparation à l'ouverture</span> 
-          </span> 
-          <i data-lucide="chevron-down" class="accordion-chevron w-4 h-4 text-stone-400"></i> 
-         </button>
-         <div class="accordion-content bg-white px-4 text-stone-600 text-sm">
-          <ul class="list-disc list-inside space-y-1">
-           <li>Nettoyage des tapis de frappe.</li>
-           <li>Remplissage initial des machines.</li>
-           <li>Mise en place de la signalétique.</li>
-           <li>Contrôle visuel sécuritaire.</li>
-          </ul>
-         </div>
-        </div>
+    <h2>📝 VALIDATION DES ACQUIS (BLOC KNOWLEDGE CHECK / QUIZ)</h2>
 
-        <div class="border border-stone-200 rounded-lg overflow-hidden">
-         <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-4 py-3 bg-stone-50 hover:bg-stone-100 transition text-left"> 
-          <span class="flex items-center gap-3">
-           <i data-lucide="circle-dot" class="w-4 h-4 text-stone-500"></i>
-           <span class="font-semibold text-sm text-stone-800">Gestion des balles</span> 
-          </span> 
-          <i data-lucide="chevron-down" class="accordion-chevron w-4 h-4 text-stone-400"></i> 
-         </button>
-         <div class="accordion-content bg-white px-4 text-stone-600 text-sm">
-          <ul class="list-disc list-inside space-y-1">
-           <li>Contrôle de l'usure et tri.</li>
-           <li>Anticipation des ruptures de stock.</li>
-           <li>Collecte mécanique sur la zone de retombée.</li>
-          </ul>
-         </div>
-        </div>
-
-        <div class="border border-stone-200 rounded-lg overflow-hidden">
-         <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-4 py-3 bg-stone-50 hover:bg-stone-100 transition text-left"> 
-          <span class="flex items-center gap-3">
-           <i data-lucide="shield-alert" class="w-4 h-4 text-stone-500"></i>
-           <span class="font-semibold text-sm text-stone-800">Sécurité & Conformité</span> 
-          </span> 
-          <i data-lucide="chevron-down" class="accordion-chevron w-4 h-4 text-stone-400"></i> 
-         </button>
-         <div class="accordion-content bg-white px-4 text-stone-600 text-sm">
-          <ul class="list-disc list-inside space-y-1">
-           <li>Surveillance active du flux de joueurs.</li>
-           <li>Respect strict des distances de sécurité.</li>
-           <li>Intervention immédiate en cas de danger.</li>
-          </ul>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-    </section>
-
-    <section class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden" data-section="3">
-     <div class="flex">
-      <div class="w-1.5 bg-emerald-700 flex-shrink-0"></div>
-      <div class="p-5 md:p-6 w-full">
-       <div class="flex items-center gap-3 mb-4">
-        <span class="flex items-center justify-center w-7 h-7 rounded bg-emerald-50 text-emerald-700 font-bold text-xs">1.3</span>
-        <h2 class="font-heading text-xl text-stone-900">Impact Expérience Client</h2>
-       </div>
-       
-       <div class="border-b border-stone-200 flex gap-4" role="tablist">
-        <button onclick="switchTab('tab-joueurs')" class="tab-btn active pb-2 text-sm text-stone-500 font-medium" data-tab="tab-joueurs">Joueurs</button> 
-        <button onclick="switchTab('tab-enseignants')" class="tab-btn pb-2 text-sm text-stone-500 font-medium" data-tab="tab-enseignants">Enseignants</button> 
-        <button onclick="switchTab('tab-club')" class="tab-btn pb-2 text-sm text-stone-500 font-medium" data-tab="tab-club">Image Club</button>
-       </div>
-       
-       <div class="mt-4 min-h-[80px]">
-        <div id="tab-joueurs" class="tab-panel active bg-stone-50 p-4 rounded-lg text-sm text-stone-600">
-         <strong class="text-stone-900 block mb-1">Fluidité d'entraînement</strong>
-         Un practice prêt évite la frustration pré-parcours. Balles disponibles et tapis propres garantissent un échauffement qualitatif.
-        </div>
-        <div id="tab-enseignants" class="tab-panel bg-stone-50 p-4 rounded-lg text-sm text-stone-600">
-         <strong class="text-stone-900 block mb-1">Efficacité pédagogique</strong>
-         Un espace structuré permet aux pros de se concentrer sur l'enseignement, sans perdre de temps sur la logistique.
-        </div>
-        <div id="tab-club" class="tab-panel bg-stone-50 p-4 rounded-lg text-sm text-stone-600">
-         <strong class="text-stone-900 block mb-1">Perception Premium</strong>
-         Le practice est le premier marqueur de la qualité d'un site. L'organisation reflète directement le niveau de service global du golf.
-        </div>
-       </div>
-      </div>
-     </div>
-    </section>
-
-    <section class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden" data-section="4">
-     <div class="flex">
-      <div class="w-1.5 bg-emerald-700 flex-shrink-0"></div>
-      <div class="p-5 md:p-6 w-full">
-       <div class="flex items-center gap-3 mb-4">
-        <span class="flex items-center justify-center w-7 h-7 rounded bg-emerald-50 text-emerald-700 font-bold text-xs">1.4</span>
-        <h2 class="font-heading text-xl text-stone-900">Standards & Comportements</h2>
-       </div>
-
-       <div class="bg-stone-50 rounded-lg p-4 border border-stone-200">
-        <p class="text-xs font-semibold text-stone-500 uppercase tracking-wider mb-3">Activité : Tri des pratiques</p>
+    <div class="rise-block">
+        <div class="block-type">Bloc : Quiz (Knowledge Check)</div>
         
-        <div id="sortItems" class="flex flex-wrap gap-2 mb-4 min-h-[30px]"></div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-         <div>
-          <h4 class="text-xs font-bold text-emerald-700 mb-2 uppercase">Conforme aux standards</h4>
-          <div id="zone-standard" class="sort-zone bg-white p-2 space-y-2" ondragover="handleDragOver(event)" ondrop="handleDrop(event,'standard')" ondragleave="handleDragLeave(event)"></div>
-         </div>
-         <div>
-          <h4 class="text-xs font-bold text-red-700 mb-2 uppercase">À proscrire</h4>
-          <div id="zone-proscrit" class="sort-zone bg-white p-2 space-y-2" ondragover="handleDragOver(event)" ondrop="handleDrop(event,'proscrit')" ondragleave="handleDragLeave(event)"></div>
-         </div>
+        <div class="quiz-question">
+            <strong>Q1. Choix unique :</strong> Pourquoi le practice est-il considéré comme un point de contact stratégique pour le club ?
+            <ul>
+                <li>A) Parce qu'il génère le plus de revenus directs.</li>
+                <li>B) C'est souvent le premier endroit utilisé par les joueurs à leur arrivée, ce qui influence directement l'image du club. (VRAI) [cite: 28, 29]</li>
+                <li>C) C'est le seul endroit où les joueurs rencontrent les enseignants.</li>
+            </ul>
+            <div class="quiz-feedback"><strong>Feedback :</strong> Correct. Le practice agit comme la vitrine opérationnelle du club. Une aire désorganisée dès l'arrivée dégrade immédiatement la perception de la qualité de service globale[cite: 28, 29, 34].</div>
         </div>
-        
-        <div class="mt-4 flex gap-2">
-         <button onclick="checkSorting()" class="bg-stone-800 hover:bg-stone-900 text-white text-xs font-semibold px-4 py-2 rounded transition">Vérifier</button> 
-         <button onclick="resetSorting()" class="text-stone-500 hover:text-stone-800 text-xs font-medium px-2 py-2 transition">Réinitialiser</button>
+
+        <div class="quiz-question">
+            <strong>Q2. QCM (Plusieurs réponses possibles) :</strong> Quelles sont les missions principales du Practiceman tout au long de la journée ?
+            <ul>
+                <li>A) Gérer l'état et le stock des balles de practice. (VRAI) [cite: 24]</li>
+                <li>B) Enseigner les bases du swing aux débutants.</li>
+                <li>C) Assurer la sécurité en surveillant l'aire d'entraînement. (VRAI) [cite: 26]</li>
+                <li>D) Maintenir l'espace propre et organisé. (VRAI) [cite: 25]</li>
+            </ul>
+            <div class="quiz-feedback"><strong>Feedback :</strong> Correct. Le rôle du Practiceman est logistique et sécuritaire. L'enseignement est exclusivement réservé aux professionnels du golf. L'objectif est de maintenir des conditions d'entraînement optimales[cite: 24, 25, 26].</div>
         </div>
-        <div id="sortFeedback" class="hidden mt-3 p-3 rounded text-xs border"></div>
-       </div>
-      </div>
-     </div>
-    </section>
 
-    <section class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden" data-section="5">
-     <div class="flex">
-      <div class="w-1.5 bg-amber-500 flex-shrink-0"></div>
-      <div class="p-5 md:p-6 w-full">
-       <div class="flex items-center gap-3 mb-4">
-        <span class="flex items-center justify-center w-7 h-7 rounded bg-amber-50 text-amber-700 font-bold text-xs">1.5</span>
-        <h2 class="font-heading text-xl text-stone-900">Cas Pratique</h2>
-       </div>
-       <div id="scenarioContainer"></div>
-      </div>
-     </div>
-    </section>
-
-    <section class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
-     <div class="bg-stone-50 border-b border-stone-200 px-5 py-4 flex justify-between items-center">
-      <h2 class="font-heading text-lg text-stone-900 font-bold">Validation des acquis</h2>
-      <span class="text-xs font-medium text-stone-500 bg-white border border-stone-200 px-2 py-1 rounded">5 Questions</span>
-     </div>
-     <div class="p-5 md:p-6">
-      <div id="quizContainer" class="space-y-6"></div>
-      <div id="quizResult" class="hidden mt-6 p-4 rounded-lg text-center border"></div>
-     </div>
-    </section>
-
-   </main>
-
-   <footer class="bg-white border-t border-stone-200 py-4 text-center mt-auto">
-    <p class="text-xs text-stone-400 font-medium tracking-wide">MODULE PRACTICEMAN • AUDIT & STANDARDS</p>
-   </footer>
-  </div>
-
-  <script>
-  // Script intact mais épuré des lourdeurs visuelles
-  const defaultConfig = { course_title: 'Introduction au métier de Practiceman', text_color: '#1c1917' };
-  if(window.elementSdk) { window.elementSdk.init({ defaultConfig }); }
-
-  function toggleAccordion(btn) {
-    const content = btn.nextElementSibling;
-    const chevron = btn.querySelector('.accordion-chevron');
-    const isOpen = content.classList.contains('open');
-    document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('open'));
-    document.querySelectorAll('.accordion-chevron').forEach(c => c.classList.remove('rotated'));
-    if (!isOpen) { content.classList.add('open'); chevron.classList.add('rotated'); }
-    updateProgress();
-  }
-
-  function switchTab(tabId) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
-    document.getElementById(tabId).classList.add('active');
-    updateProgress();
-  }
-
-  function showTooltip(id) {
-    ['tip1','tip2','tip3'].forEach(t => document.getElementById(t).classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-  }
-
-  const sortData = [
-    { text: 'Vérifier l\'état des tapis', answer: 'standard' },
-    { text: 'Anticiper les balles box', answer: 'standard' },
-    { text: 'Laisser des tees cassés', answer: 'proscrit' },
-    { text: 'Zone de collecte non sécurisée', answer: 'proscrit' }
-  ];
-  let draggedItem = null;
-
-  function initSorting() {
-    const container = document.getElementById('sortItems');
-    container.innerHTML = '';
-    [...sortData].sort(() => Math.random() - 0.5).forEach((item, i) => {
-      const el = document.createElement('div');
-      el.className = 'sort-item bg-white border border-stone-200 rounded px-2 py-1.5 text-xs font-medium text-stone-700 shadow-sm cursor-pointer md:cursor-grab';
-      el.draggable = true;
-      el.dataset.answer = item.answer;
-      el.textContent = item.text;
-      el.addEventListener('dragstart', (e) => { draggedItem = el; el.style.opacity = '0.5'; });
-      el.addEventListener('dragend', () => { el.style.opacity = '1'; });
-      el.addEventListener('click', () => handleTapSort(el));
-      container.appendChild(el);
-    });
-    document.getElementById('zone-standard').innerHTML = '';
-    document.getElementById('zone-proscrit').innerHTML = '';
-    document.getElementById('sortFeedback').classList.add('hidden');
-  }
-
-  let selectedSortItem = null;
-  function handleTapSort(el) {
-    if (el.parentElement.id === 'sortItems') {
-      document.querySelectorAll('.sort-item').forEach(s => s.style.borderColor = '#e5e7eb');
-      el.style.borderColor = '#059669';
-      selectedSortItem = el;
-    }
-  }
-  document.querySelectorAll('.sort-zone').forEach(zone => {
-    zone.addEventListener('click', () => {
-      if (selectedSortItem) { zone.appendChild(selectedSortItem); selectedSortItem.style.borderColor = '#e5e7eb'; selectedSortItem = null; }
-    });
-  });
-
-  function handleDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
-  function handleDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
-  function handleDrop(e, zone) { e.preventDefault(); e.currentTarget.classList.remove('drag-over'); if (draggedItem) e.currentTarget.appendChild(draggedItem); draggedItem = null; }
-
-  function checkSorting() {
-    const fb = document.getElementById('sortFeedback');
-    let correct = 0;
-    ['zone-standard', 'zone-proscrit'].forEach(zoneId => {
-      const zone = document.getElementById(zoneId);
-      const expected = zoneId.split('-')[1];
-      zone.querySelectorAll('.sort-item').forEach(item => {
-        if (item.dataset.answer === expected) { item.style.background = '#ecfdf5'; item.style.borderColor = '#10b981'; correct++; }
-        else { item.style.background = '#fef2f2'; item.style.borderColor = '#ef4444'; }
-      });
-    });
-    fb.classList.remove('hidden');
-    if (correct === sortData.length) { fb.className = 'mt-3 p-3 rounded text-xs bg-emerald-50 text-emerald-800 border-emerald-200'; fb.textContent = 'Standards identifiés correctement.'; } 
-    else { fb.className = 'mt-3 p-3 rounded text-xs bg-amber-50 text-amber-800 border-amber-200'; fb.textContent = 'Certains comportements sont mal classifiés.'; }
-  }
-  function resetSorting() { initSorting(); }
-
-  const scenario = {
-    situation: "Vous arrivez le matin. Des balles sont éparpillées, deux tapis sont déchirés. Le premier client arrive dans 15 minutes.",
-    options: [
-      { text: "Ramasser toutes les balles en priorité", correct: false, feedback: "Chronophage. Le client a d'abord besoin d'un poste fonctionnel." },
-      { text: "Sécuriser les postes et remplir un balles box", correct: true, feedback: "Priorité opérationnelle validée : sécurité et disponibilité de base." },
-      { text: "Appeler la maintenance et attendre", correct: false, feedback: "Manque de proactivité. Le Practiceman doit gérer l'urgence." }
-    ]
-  };
-  let scenarioAnswered = false;
-
-  function renderScenario() {
-    document.getElementById('scenarioContainer').innerHTML = `
-      <div class="bg-stone-50 border border-stone-200 rounded-lg p-4 mb-4">
-        <strong class="text-xs text-stone-500 uppercase">Contexte</strong>
-        <p class="text-sm mt-1">${scenario.situation}</p>
-      </div>
-      <p class="text-sm font-semibold mb-3">Action prioritaire :</p>
-      <div class="space-y-2">
-        ${scenario.options.map((o, i) => `<button onclick="selectScenario(${i})" id="scOpt${i}" class="scenario-card w-full text-left rounded-lg p-3 text-sm">${o.text}</button>`).join('')}
-      </div>
-      <div id="scenarioFeedback" class="hidden mt-3 p-3 rounded-lg text-sm border"></div>
-    `;
-  }
-
-  function selectScenario(idx) {
-    if (scenarioAnswered) return;
-    scenarioAnswered = true;
-    const opt = scenario.options[idx];
-    const fb = document.getElementById('scenarioFeedback');
-    scenario.options.forEach((o, i) => {
-      const el = document.getElementById('scOpt' + i);
-      el.style.pointerEvents = 'none';
-      if (o.correct) { el.style.borderColor = '#10b981'; el.style.background = '#ecfdf5'; }
-      else if (i === idx) { el.style.borderColor = '#ef4444'; el.style.background = '#fef2f2'; }
-    });
-    fb.classList.remove('hidden');
-    fb.className = `mt-3 p-3 rounded-lg text-xs border ${opt.correct ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'}`;
-    fb.innerHTML = `<strong>${opt.correct ? 'Conforme' : 'Non conforme'}</strong> : ${opt.feedback}`;
-  }
-
-  const quizQuestions = [
-    { q: "Quelle est la responsabilité principale du Practiceman ?", type: "single", options: ["Cours débutants", "Fonctionnement du practice", "Boutique"], correct: [1] },
-    { q: "Un practice mal géré impacte :", type: "multiple", options: ["L'échauffement", "L'enseignement", "L'image du club"], correct: [0, 1, 2] }
-  ];
-  let quizState = { answers: {}, submitted: false };
-
-  function renderQuiz() {
-    document.getElementById('quizContainer').innerHTML = quizQuestions.map((q, qi) => `
-      <div class="pb-4 border-b border-stone-100 last:border-0 last:pb-0">
-        <p class="text-sm font-semibold mb-2">${qi + 1}. ${q.q} <span class="text-[10px] text-stone-400 font-normal ml-1">(${q.type === 'multiple' ? 'QCM' : 'Choix unique'})</span></p>
-        <div class="space-y-2">
-          ${q.options.map((opt, oi) => `
-            <label class="quiz-option flex items-center gap-2 rounded px-3 py-2 text-sm" id="qOpt${qi}_${oi}">
-              <input type="${q.type === 'multiple' ? 'checkbox' : 'radio'}" name="q${qi}" class="accent-emerald-700" onchange="selectQuizOption(${qi}, ${oi}, '${q.type}')">
-              ${opt}
-            </label>
-          `).join('')}
+        <div class="quiz-question">
+            <strong>Q3. Choix unique :</strong> Parmi ces qualités, laquelle est requise spécifiquement pour garantir l'intégrité physique des joueurs ?
+            <ul>
+                <li>A) L'esprit d'équipe[cite: 40].</li>
+                <li>B) Le sens du service[cite: 39].</li>
+                <li>C) La vigilance[cite: 38]. (VRAI)</li>
+            </ul>
+            <div class="quiz-feedback"><strong>Feedback :</strong> Correct. La vigilance est la compétence clé pour anticiper et prévenir les accidents sur une zone où des balles sont frappées à grande vitesse[cite: 38].</div>
         </div>
-      </div>
-    `).join('') + `<button onclick="submitQuiz()" id="quizSubmitBtn" class="w-full bg-stone-900 hover:bg-stone-800 text-white font-semibold py-2.5 rounded text-sm mt-4">Valider</button>`;
-  }
 
-  function selectQuizOption(qi, oi, type) {
-    if (quizState.submitted) return;
-    if (type === 'single') quizState.answers[qi] = [oi];
-    else {
-      quizState.answers[qi] = quizState.answers[qi] || [];
-      const idx = quizState.answers[qi].indexOf(oi);
-      if (idx > -1) quizState.answers[qi].splice(idx, 1); else quizState.answers[qi].push(oi);
-    }
-  }
+        <div class="quiz-question">
+            <strong>Q4. QCM (Plusieurs réponses possibles) :</strong> Quels sont les bénéfices directs d'un practice préparé de manière rigoureuse ?
+            <ul>
+                <li>A) Les joueurs s'échauffent dans de bonnes conditions. (VRAI) [cite: 31]</li>
+                <li>B) Les enseignants travaillent efficacement avec leurs élèves. (VRAI) [cite: 32]</li>
+                <li>C) Le temps de jeu sur le parcours est réduit.</li>
+                <li>D) Le club offre une image professionnelle. (VRAI) [cite: 33]</li>
+            </ul>
+            <div class="quiz-feedback"><strong>Feedback :</strong> Correct. Un practice structuré sert trois cibles : le confort du client final, l'outil de travail du pro enseignant, et l'image de marque de la direction[cite: 31, 32, 33].</div>
+        </div>
 
-  function submitQuiz() {
-    if (quizState.submitted) return;
-    quizState.submitted = true;
-    let score = 0;
-    quizQuestions.forEach((q, qi) => {
-      const userAns = (quizState.answers[qi] || []).sort().join(',');
-      if (userAns === q.correct.sort().join(',')) score++;
-      q.options.forEach((_, oi) => {
-        const label = document.getElementById(`qOpt${qi}_${oi}`);
-        label.querySelector('input').disabled = true;
-        if (q.correct.includes(oi)) label.classList.add('correct-answer');
-        else if ((quizState.answers[qi] || []).includes(oi)) label.classList.add('wrong-answer');
-      });
-    });
-    const res = document.getElementById('quizResult');
-    res.classList.remove('hidden');
-    const passed = score === quizQuestions.length;
-    res.className = `mt-4 p-3 rounded text-sm font-semibold border ${passed ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-amber-50 border-amber-200 text-amber-800'}`;
-    res.textContent = passed ? `Score parfait : ${score}/${quizQuestions.length}. Module validé.` : `Score : ${score}/${quizQuestions.length}. Ajustements nécessaires.`;
-    document.getElementById('quizSubmitBtn').style.display = 'none';
-  }
+        <div class="quiz-question">
+            <strong>Q5. Choix unique :</strong> Avec qui le Practiceman doit-il faire preuve d'esprit d'équipe au quotidien ?
+            <ul>
+                <li>A) Uniquement avec les autres Practicemen.</li>
+                <li>B) Exclusivement avec la direction.</li>
+                <li>C) Avec les jardiniers, les enseignants et l'accueil. (VRAI) [cite: 40]</li>
+            </ul>
+            <div class="quiz-feedback"><strong>Feedback :</strong> Correct. Le practice n'est pas un îlot isolé. La coordination avec le terrain (jardiniers), l'opérationnel (accueil) et le sportif (enseignants) est vitale pour la fluidité de l'expérience client[cite: 40].</div>
+        </div>
+    </div>
 
-  const totalSections = 5; let visitedSections = new Set();
-  function updateProgress() {
-    document.querySelectorAll('[data-section]').forEach(sec => {
-      if (sec.getBoundingClientRect().top < window.innerHeight * 0.8) visitedSections.add(sec.dataset.section);
-    });
-    if (quizState.submitted) visitedSections.add('quiz');
-    const count = Math.min(visitedSections.size, totalSections);
-    document.getElementById('progressBar').style.width = (count / totalSections * 100) + '%';
-    document.getElementById('progressText').textContent = `${count}/${totalSections}`;
-  }
-
-  initSorting(); renderScenario(); renderQuiz(); lucide.createIcons();
-  document.getElementById('app-shell').addEventListener('scroll', updateProgress);
-  updateProgress();
-  </script>
- </body>
+</body>
 </html>
