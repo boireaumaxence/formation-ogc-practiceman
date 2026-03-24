@@ -2,152 +2,60 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Montage Rise 360 - Chapitre 1 : Introduction au métier de Practiceman</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f5; color: #1f2937; line-height: 1.6; padding: 20px; max-width: 900px; margin: auto; }
-        h1 { color: #111827; border-bottom: 3px solid #059669; padding-bottom: 10px; }
-        h2 { color: #059669; margin-top: 30px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .rise-block { background: #ffffff; border: 1px solid #e5e7eb; border-left: 5px solid #059669; padding: 20px; margin-bottom: 20px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .block-type { display: inline-block; background: #e5e7eb; color: #374151; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; }
-        .visual-suggestion { background: #f0fdf4; border: 1px dashed #10b981; padding: 15px; margin-top: 15px; font-size: 0.9rem; color: #065f46; }
-        .quiz-question { background: #f9fafb; padding: 15px; border-left: 3px solid #3b82f6; margin-bottom: 15px; }
-        .quiz-feedback { background: #eff6ff; padding: 10px; margin-top: 10px; font-size: 0.9rem; color: #1e3a8a; font-weight: 500; }
-        strong { color: #111827; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: auto; padding: 20px; }
+        .header { background: #004a99; color: white; padding: 20px; text-align: center; border-radius: 8px; }
+        .section { margin-top: 25px; padding: 15px; border-left: 5px solid #004a99; background: #f9f9f9; }
+        .highlight { font-weight: bold; color: #004a99; }
+        .quiz-container { margin-top: 40px; padding: 20px; border: 2px solid #e0e0e0; border-radius: 10px; }
+        .question { font-weight: bold; margin-bottom: 10px; }
+        .feedback { display: none; margin-top: 10px; padding: 10px; border-radius: 5px; font-size: 0.9em; }
+        .correct { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>CHAPITRE 1 : INTRODUCTION AU MÉTIER DE PRACTICEMAN</h1>
+        <p>Expertise Opérationnelle & Qualité de Service</p>
+    </div>
 
-    <h1>CHAPITRE 1 — INTRODUCTION AU MÉTIER DE PRACTICEMAN</h1>
+    <div class="section">
+        <h3>1.1 Définition & Rôle</h3>
+        <p>Le <span class="highlight">Practiceman</span> est le garant opérationnel de l’aire d’entraînement[cite: 18]. Il assure quatre piliers fondamentaux : propreté, organisation, sécurité et disponibilité[cite: 19]. Le practice est un espace à haute fréquentation servant à l’échauffement, l’entraînement individuel et les cours professionnels[cite: 20, 21].</p>
+    </div>
 
-    <div class="rise-block">
-        <div class="block-type">Bloc : Texte Introductif (Text > Statement)</div>
-        <p><strong>1.1 — Définition du métier</strong></p>
-        <p>Le Practiceman est la personne responsable du bon fonctionnement du practice dans un golf[cite: 18]. Il veille à ce que l’aire d’entraînement soit propre, organisée, sécurisée et prête à accueillir les joueurs[cite: 19].</p>
-        <p>Le practice est un espace très fréquenté. Les joueurs viennent y frapper des balles pour s’échauffer avant leur départ, pour s’entraîner ou pour participer à des cours avec les enseignants[cite: 20].</p>
-        <p>Le rôle du Practiceman est donc de préparer et maintenir cet espace dans des conditions optimales tout au long de la journée[cite: 21]. Son travail consiste à préparer, organiser et sécuriser le practice afin d’offrir aux joueurs un espace d’entraînement de qualité[cite: 43].</p>
+    <div class="section">
+        <h3>1.2 Missions Principales</h3>
+        <ul>
+            <li><strong>Préparation :</strong> Mise en place complète avant l'ouverture[cite: 23].</li>
+            <li><strong>Gestion des flux :</strong> Contrôle de l'état et remplissage des balles box[cite: 24].</li>
+            <li><strong>Maintenance :</strong> Maintien de la propreté en continu[cite: 25].</li>
+            <li><strong>Vigilance :</strong> Surveillance active de la sécurité de la zone[cite: 26].</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h3>1.3 Impact sur l'Expérience Client</h3>
+        <p>Le practice constitue souvent le premier point de contact physique du joueur avec le club[cite: 28]. Une organisation rigoureuse crédibilise l'image professionnelle du golf et optimise les conditions de travail des enseignants[cite: 32, 33].</p>
+    </div>
+
+    <div class="quiz-container">
+        <h2>Quiz de validation - Chapitre 1</h2>
         
-        <div class="visual-suggestion">
-            <strong>📷 Suggestion visuelle (Image pleine largeur) :</strong> Une photo professionnelle (format paysage) montrant un practice parfaitement aligné à l'aube, sans joueur, illustrant la notion de "conditions optimales" et de préparation.
-        </div>
+        <div class="question">1. Quel est l'impact principal d'un practice bien préparé ? (Choix Unique)</div>
+        <input type="radio" name="q1" onclick="showFeedback('f1')"> Augmenter le temps de présence au bar.<br>
+        <input type="radio" name="q1" onclick="showFeedback('f1')"> Offrir une image professionnelle et des conditions optimales d'entraînement.<br>
+        <div id="f1" class="feedback correct"><strong>Logique Métier :</strong> Le practice est la vitrine du club. La data terrain montre que la première impression conditionne la perception globale de la qualité de service[cite: 28, 33].</div>
+
+        <div class="question">2. Quelles sont les qualités requises ? (QCM)</div>
+        <input type="checkbox"> Rigueur et organisation[cite: 36, 37].<br>
+        <input type="checkbox"> Vigilance sécurité[cite: 38].<br>
+        <input type="checkbox"> Sens du service et esprit d'équipe[cite: 39, 40].<br>
+        <div class="feedback correct" style="display:block;"><strong>Feedback :</strong> Toutes ces qualités sont indispensables pour transformer une prestation ponctuelle en actif structurant pour le club.</div>
     </div>
 
-    <div class="rise-block">
-        <div class="block-type">Bloc : Accordéon (Interactive > Accordion)</div>
-        <p><strong>1.2 — Les missions principales</strong></p>
-        <p><em>Configuration dans Rise : Créez 4 panneaux d'accordéon avec les textes suivants.</em></p>
-        <ul>
-            <li><strong>Titre de l'accordéon 1 :</strong> Préparer l'ouverture
-                <br><em>Contenu :</em> Préparer le practice avant l’ouverture afin que les installations soient prêtes à accueillir les joueurs[cite: 23].
-            </li>
-            <br>
-            <li><strong>Titre de l'accordéon 2 :</strong> Gérer les balles
-                <br><em>Contenu :</em> Gérer les balles de practice en contrôlant leur état et en remplissant les balles box[cite: 24].
-            </li>
-            <br>
-            <li><strong>Titre de l'accordéon 3 :</strong> Maintenir l'espace
-                <br><em>Contenu :</em> Maintenir le practice propre et organisé tout au long de la journée[cite: 25].
-            </li>
-            <br>
-            <li><strong>Titre de l'accordéon 4 :</strong> Assurer la sécurité
-                <br><em>Contenu :</em> Assurer la sécurité sur le practice en surveillant l’aire d’entraînement[cite: 26].
-            </li>
-        </ul>
-    </div>
-
-    <div class="rise-block">
-        <div class="block-type">Bloc : Onglets (Interactive > Tabs)</div>
-        <p><strong>1.3 — Le rôle dans l’expérience client</strong></p>
-        <p>Le practice est souvent le premier endroit utilisé par les joueurs lorsqu’ils arrivent au golf[cite: 28]. La qualité de son organisation influence directement l’image du club[cite: 29]. Le Practiceman participe donc directement à la qualité de service du golf[cite: 34].</p>
-        <p><em>Configuration dans Rise : Créez 3 onglets.</em></p>
-        <ul>
-            <li><strong>Onglet 1 : Joueurs</strong>
-                <br><em>Contenu :</em> Un practice bien préparé permet aux joueurs de s’échauffer dans de bonnes conditions[cite: 30, 31].
-            </li>
-            <br>
-            <li><strong>Onglet 2 : Enseignants</strong>
-                <br><em>Contenu :</em> Un practice bien préparé permet aux enseignants de travailler efficacement avec leurs élèves[cite: 30, 32].
-            </li>
-            <br>
-            <li><strong>Onglet 3 : Image du Club</strong>
-                <br><em>Contenu :</em> Un practice bien préparé permet au club d’offrir une image professionnelle[cite: 30, 33].
-            </li>
-        </ul>
-    </div>
-
-    <div class="rise-block">
-        <div class="block-type">Bloc : Grille d'images (Gallery > Grid) ou Liste avec icônes</div>
-        <p><strong>1.4 — Les qualités d’un bon Practiceman</strong></p>
-        <p><em>Configuration dans Rise : Utilisez une grille avec de petites icônes pour chaque point, ou un bloc "Flashcard grid" pour dynamiser la lecture.</em></p>
-        <ul>
-            <li><strong>Organisation :</strong> Pour préparer et gérer le practice[cite: 36].</li>
-            <li><strong>Rigueur :</strong> Pour maintenir un espace propre et fonctionnel[cite: 37].</li>
-            <li><strong>Vigilance :</strong> Pour assurer la sécurité des joueurs[cite: 38].</li>
-            <li><strong>Sens du service :</strong> Pour accueillir et orienter les clients[cite: 39].</li>
-            <li><strong>Esprit d’équipe :</strong> Pour travailler avec les jardiniers, les enseignants et l’accueil[cite: 40].</li>
-        </ul>
-        <div class="visual-suggestion">
-            <strong>📷 Suggestion visuelle :</strong> Associer une icône claire à chaque qualité (ex: un œil pour la vigilance, une poignée de main pour le sens du service, des rouages pour l'organisation).
-        </div>
-    </div>
-
-    <h2>📝 VALIDATION DES ACQUIS (BLOC KNOWLEDGE CHECK / QUIZ)</h2>
-
-    <div class="rise-block">
-        <div class="block-type">Bloc : Quiz (Knowledge Check)</div>
-        
-        <div class="quiz-question">
-            <strong>Q1. Choix unique :</strong> Pourquoi le practice est-il considéré comme un point de contact stratégique pour le club ?
-            <ul>
-                <li>A) Parce qu'il génère le plus de revenus directs.</li>
-                <li>B) C'est souvent le premier endroit utilisé par les joueurs à leur arrivée, ce qui influence directement l'image du club. (VRAI) [cite: 28, 29]</li>
-                <li>C) C'est le seul endroit où les joueurs rencontrent les enseignants.</li>
-            </ul>
-            <div class="quiz-feedback"><strong>Feedback :</strong> Correct. Le practice agit comme la vitrine opérationnelle du club. Une aire désorganisée dès l'arrivée dégrade immédiatement la perception de la qualité de service globale[cite: 28, 29, 34].</div>
-        </div>
-
-        <div class="quiz-question">
-            <strong>Q2. QCM (Plusieurs réponses possibles) :</strong> Quelles sont les missions principales du Practiceman tout au long de la journée ?
-            <ul>
-                <li>A) Gérer l'état et le stock des balles de practice. (VRAI) [cite: 24]</li>
-                <li>B) Enseigner les bases du swing aux débutants.</li>
-                <li>C) Assurer la sécurité en surveillant l'aire d'entraînement. (VRAI) [cite: 26]</li>
-                <li>D) Maintenir l'espace propre et organisé. (VRAI) [cite: 25]</li>
-            </ul>
-            <div class="quiz-feedback"><strong>Feedback :</strong> Correct. Le rôle du Practiceman est logistique et sécuritaire. L'enseignement est exclusivement réservé aux professionnels du golf. L'objectif est de maintenir des conditions d'entraînement optimales[cite: 24, 25, 26].</div>
-        </div>
-
-        <div class="quiz-question">
-            <strong>Q3. Choix unique :</strong> Parmi ces qualités, laquelle est requise spécifiquement pour garantir l'intégrité physique des joueurs ?
-            <ul>
-                <li>A) L'esprit d'équipe[cite: 40].</li>
-                <li>B) Le sens du service[cite: 39].</li>
-                <li>C) La vigilance[cite: 38]. (VRAI)</li>
-            </ul>
-            <div class="quiz-feedback"><strong>Feedback :</strong> Correct. La vigilance est la compétence clé pour anticiper et prévenir les accidents sur une zone où des balles sont frappées à grande vitesse[cite: 38].</div>
-        </div>
-
-        <div class="quiz-question">
-            <strong>Q4. QCM (Plusieurs réponses possibles) :</strong> Quels sont les bénéfices directs d'un practice préparé de manière rigoureuse ?
-            <ul>
-                <li>A) Les joueurs s'échauffent dans de bonnes conditions. (VRAI) [cite: 31]</li>
-                <li>B) Les enseignants travaillent efficacement avec leurs élèves. (VRAI) [cite: 32]</li>
-                <li>C) Le temps de jeu sur le parcours est réduit.</li>
-                <li>D) Le club offre une image professionnelle. (VRAI) [cite: 33]</li>
-            </ul>
-            <div class="quiz-feedback"><strong>Feedback :</strong> Correct. Un practice structuré sert trois cibles : le confort du client final, l'outil de travail du pro enseignant, et l'image de marque de la direction[cite: 31, 32, 33].</div>
-        </div>
-
-        <div class="quiz-question">
-            <strong>Q5. Choix unique :</strong> Avec qui le Practiceman doit-il faire preuve d'esprit d'équipe au quotidien ?
-            <ul>
-                <li>A) Uniquement avec les autres Practicemen.</li>
-                <li>B) Exclusivement avec la direction.</li>
-                <li>C) Avec les jardiniers, les enseignants et l'accueil. (VRAI) [cite: 40]</li>
-            </ul>
-            <div class="quiz-feedback"><strong>Feedback :</strong> Correct. Le practice n'est pas un îlot isolé. La coordination avec le terrain (jardiniers), l'opérationnel (accueil) et le sportif (enseignants) est vitale pour la fluidité de l'expérience client[cite: 40].</div>
-        </div>
-    </div>
-
+    <script>
+        function showFeedback(id) { document.getElementById(id).style.display = 'block'; }
+    </script>
 </body>
 </html>
